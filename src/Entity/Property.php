@@ -6,6 +6,10 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+
 
 /*
  * @ORM\Entity(repositoryClass="App\Repository\PropertyRepository")
@@ -13,6 +17,7 @@ use Cocur\Slugify\Slugify;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity("title")
  * @ORM\Table(name="bdagence.property")
  */
 class Property
@@ -31,6 +36,7 @@ class Property
 
     /**
      * @ORM\Column(type="string", length=255)
+     *@Assert\Length(min=5,max=255)
      */
     private $title;
 
@@ -41,6 +47,7 @@ class Property
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=10, max=400)
      */
     private $surface;
 
@@ -81,6 +88,7 @@ class Property
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex("/^[0-9]{5}$/")
      */
     private $postal_code;
 

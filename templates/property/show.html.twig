@@ -10,51 +10,60 @@
 			<div class="row">
 				<div class="col-md-8"></div>
 				<div class="col-md-4">
-					<h1>{{property.title}}</h1>
-					<h2>{{property.rooms}}
-						picèces -
-						{{property.surface}}
-						m2
-					</h2>
-					<div class="text-primary" style="font-size: 4rem;font-weigt: bold;">{{property.formattedPrice}}D</div>
-					<a href="a" class=" btn btn-primary">Contacter l'agence</a>
+					<div class="card" style="max-width: 18rem;max-height: 15em">
+						<div class="card text-white bg-primary mb-3" style="max-width: 18rem;max-height: 10em">
+							<div class="card-header">
+								<h3>{{property.title}}</h3>
+							</div>
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">{{property.rooms}}
+								picèces -
+								{{property.surface}}
+								m2</h5>
+							<p class="card-text">
+								<div class="text-primary" style="font-size: 2rem;font-weigt: bold;">{{property.formattedPrice}}D</div>
+							</p>
+							<a href="a" class=" btn btn-primary">Contacter l'agence</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="container mt-4">
-		<p>{{property.description | nl2br}}</p>
-		<div class="row">
-			<div class="col-md-8">
-				<h2>Caractéristique</h2>
-				<table class="table table-striped">
-					<tr>
-						<td>Surface habitable</td>
-						<td>{{property.surface}}
-							m2</td>
-					</tr>
-					<tr>
-						<td>Pièces</td>
-						<td>{{property.rooms}}</td>
-					</tr>
-					<tr>
-						<td>Chambres</td>
-						<td>{{property.bedrooms}}</td>
-					</tr>
-					<tr>
-						<td>Etage</td>
-						<td>{{property.floor}}</td>
-					</tr>
-					<tr>
-						<td>Chauffage</td>
-						<td>{{property.getHeatType()}}</td>
-					</tr>
-				</table>
-			</div>
-			<div class="col-md-4">
-				<h2>Spécificités</h2>
-			</div>
+		<div class="container mt-4">
+			<p>{{property.description | nl2br}}</p>
+			<div class="row">
+				<div class="col-md-8">
+					<h2>Caractéristique</h2>
+					<table class="table table-hover">
+						<tr>
+							<td>Surface habitable</td>
+							<td>{{property.surface}}
+								m2</td>
+						</tr>
+						<tr>
+							<td>Pièces</td>
+							<td>{{property.rooms}}</td>
+						</tr>
+						<tr>
+							<td>Chambres</td>
+							<td>{{property.bedrooms}}</td>
+						</tr>
+						<tr>
+							<td>Etage</td>
+							<td>{{property.floor}}</td>
+						</tr>
+						<tr>
+							<td>Chauffage</td>
+							<td>{{property.getHeatType()}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-4">
+					<h2>Spécificités</h2>
+				</div>
 
+			</div>
 		</div>
-	</div>
-</td></tr></td></tr></td></tr>{% endblock %}
+	</td>
+</tr></td></tr></td></tr>{% endblock %}
