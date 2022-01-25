@@ -10,7 +10,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
-
+/**
+ * pour faire la migration on utilise cela
+ * ORM\Entity(repositoryClass=PropertyRepository::class)
+ * UniqueEntity("title")
+ */
 /*
  * @ORM\Entity(repositoryClass="App\Repository\PropertyRepository")
  */
@@ -20,6 +24,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("title")
  * @ORM\Table(name="bdagence.property")
  */
+
 class Property
 {
 
@@ -106,6 +111,11 @@ class Property
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $proprietaire;
 
     public function __construct()
     {
@@ -302,6 +312,18 @@ class Property
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getProprietaire(): ?string
+    {
+        return $this->proprietaire;
+    }
+
+    public function setProprietaire(?string $proprietaire): self
+    {
+        $this->proprietaire = $proprietaire;
 
         return $this;
     }

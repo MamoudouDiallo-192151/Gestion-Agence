@@ -2,30 +2,35 @@
 {% block title %}Agence_Diallo
 {% endblock %}
 {% block body %}
-	<div class="jumbotron text-center">
-		<h1>Agence Immobilière Diallo Mamoudou</h1>
-	</div>
-	<div class="row  mb-3 text-center ">
-		<h2>Les derniers biens</h2>
-		{%  for property in properties%}
-			<div class="col-md-2">
-				<div class=" card" style=" max-width: 18rem;max-height: 15em">
-					<div class="card text-white bg-primary mb-3" style="max-width: 18rem;max-height: 10em">
-						<div class="card-header py-2">
-							<a class="link-light my-0 fw-normal" href="{{path('property_show',{id:property.id, slug: property.slug})}}">{{property.title}}</a>
+	<div class="jumbotron text-center"></div>
+	<div class="container text-center">
+		<div class="row  mb-3 text-center ">
+			{% if is_granted('ROLE_ADMIN') %}
+				<h1>Bienvenue
+					{{ app.user.nom }}
+					{{app.user.prenom}}</h1>
+			{% endif %}
+			<h2>Les derniers biens</h2>
+			{%  for property in properties%}
+				<div class="col-md-2">
+					<div class=" card" style=" max-width: 18rem;max-height: 15em">
+						<div class="card text-white bg-primary mb-3" style="max-width: 18rem;max-height: 10em">
+							<div class="card-header py-2">
+								<a class="link-light my-0 fw-normal" href="{{path('property_show',{id:property.id, slug: property.slug})}}">{{property.title}}</a>
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="card-text">
+								{{property.city}}
+								({{property.postalCode}})</div>
+							<p class="card-text">
+								<div class="text-primary" style="font-size: 2rem;font-weigt: bold;">{{property.getFormattedPrice}}
+									D</div>
+							</p>
 						</div>
 					</div>
-					<div class="card-body">
-						<div class="card-text">
-							{{property.city}}
-							({{property.postalCode}})</div>
-						<p class="card-text">
-							<div class="text-primary" style="font-size: 2rem;font-weigt: bold;">{{property.getFormattedPrice}}
-								D</div>
-						</p>
-					</div>
 				</div>
-			</div>
-		{% endfor %}
+			{% endfor %}
+		</div>
 	</div>
-</div>{% endblock %}
+{% endblock %}

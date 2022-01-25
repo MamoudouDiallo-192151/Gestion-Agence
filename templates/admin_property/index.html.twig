@@ -25,11 +25,13 @@
 						<td>{{property.title}}</td>
 						<td>
 							<a href="{{path('admin_property_edit',{id:property.id})}}" class="btn btn-secondary">Editer</a>
-							<form method="POST" action="{{path('admin_property_delete',{id:property.id})}}" style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr de supprimer ?')">
-								<input type="hidden" name="method" value="DELETE">
-								<input type="hidden" name="_token" value="{{csrf_token('delete' ~ property.id)}}">
-								<button class="btn btn-danger">Supprimer</button>
-							</form>
+							{% if is_granted('ROLE_ADMIN') %}
+								<form method="POST" action="{{path('admin_property_delete',{id:property.id})}}" style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr de supprimer ?')">
+									<input type="hidden" name="method" value="DELETE">
+									<input type="hidden" name="_token" value="{{csrf_token('delete' ~ property.id)}}">
+									<button class="btn btn-danger">Supprimer</button>
+								</form>
+							{% endif %}
 						</td>
 					</tr>
 				{% endfor %}

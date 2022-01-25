@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 class AdminPropertyController extends AbstractController
 {
@@ -18,7 +20,7 @@ class AdminPropertyController extends AbstractController
     {
         $propertys = $rep->findAll();
         return $this->render('admin_property/index.html.twig', [
-            'properties' => $propertys,
+            'properties' => $propertys, 'current_menu' => 'admin'
         ]);
     }
     #[Route('/admin/property/create', name: 'admin_property_create')]
@@ -54,7 +56,8 @@ class AdminPropertyController extends AbstractController
     }
     /**
      * Cette methode permet de verifier si le token est valide et supprimer le bien
-     */
+     *  *@IsGranted("ROLE_ADMIN")
+     * */
     #[Route('/admin/{id}/delete', name: 'admin_property_delete')]
     public function delete(Property $property, Request $request, EntityManagerInterface $em): Response
     {
