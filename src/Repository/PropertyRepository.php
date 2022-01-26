@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Property;
+use App\Entity\PropertySearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,22 +23,34 @@ class PropertyRepository extends ServiceEntityRepository
         parent::__construct($registry, Property::class);
     }
     /**
-     * @return  Property[]
+     * @return  Query
      */
-    public function findAllVisible(): array
+    public function findAllVisibleQuery(PropertySearch $search): Query
     {
-        return $this->findAllVisibleQuery()
-            ->getQuery()
-            ->getResult();
+        $query = $this->findVisibleQuery();
+        if ($search->getMaxPrice()) {
+            $query = $query
+                //andWhere traite une à une les requêtes
+                // p.prix<=:maxprice signifie que le prix de notre bien soit inferieur au prix données
+                ->andwhere('p.prix<=:maxprice')
+                ->setParameter('maxprice', $search->getMaxPrice());
+        }
+        if ($search->getMinSurface()) {
+            $query = $query
+                ->andwhere('p.surface>= :minsurface')
+                ->setParameter('minsurface', $search->getMinSurface());
+        }
+        return $query->getQuery();
     }
 
     /**
      * @return  Property[]
+     * les 4 derniers biens
      *
      */
     public function findLatest(): array
     {
-        return $this->findAllVisibleQuery()
+        return $this->findVisibleQuery()
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
@@ -47,7 +61,7 @@ class PropertyRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder
      */
-    private function findAllVisibleQuery(): ORMQueryBuilder
+    private function findVisibleQuery(): ORMQueryBuilder
     {
         return $this->createQueryBuilder('p')
             ->where('p.sold=false');

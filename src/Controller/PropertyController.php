@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Property;
+use App\Entity\PropertySearch;
+use App\Form\PropertySearchType;
 use App\Repository\PropertyRepository;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Paginator
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request; // Nous avons besoin d'accéder à la requête pour obtenir le numéro de page
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,11 +28,21 @@ class  PropertyController extends AbstractController
      *@Route("/biens", name="property_index")
      * @return Response
      */
-    public function index(): Response
-    {   //permet de changer le sold dans la BD
-        // $property[0]->setSold(true);
-        // $this->em->flush();
-        return $this->render('property/index.html.twig', ['current_menu' => 'properties']);
+    public function index(PropertyRepository $rep, PaginatorInterface $paginator, Request $request): Response
+    {
+        $search = new PropertySearch();
+        $form = $this->createForm(PropertySearchType::class, $search);
+        $form->handleRequest($request);
+        $properties = $paginator->paginate(
+            $rep->findAllVisibleQuery($search), //// Requête contenant les données à paginer (ici nos properties)
+            $request->query->getInt('page', 1), //// Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            12
+        );
+        return $this->render('property/index.html.twig', [
+            'properties' => $properties,
+            'formSearch' => $form->createView(),
+            'current_menu' => 'properties'
+        ]);
     }
 
 
