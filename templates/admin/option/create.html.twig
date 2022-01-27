@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}create
+{% endblock %}
+
+{% block body %}
+	<h1>Ajouter une option</h1>
+	{{include("admin/option/_form.html.twig")}}
+{% endblock %}

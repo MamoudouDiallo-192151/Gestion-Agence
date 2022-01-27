@@ -4,6 +4,8 @@ namespace App\Entity;
 
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -11,14 +13,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
- * pour faire la migration on utilise cela
- * ORM\Entity(repositoryClass=PropertyRepository::class)
- * UniqueEntity("title")
+ * pour faire la migration on utilise cela sinon ca vas ecraser la bd
+ * @ORM\Entity(repositoryClass=PropertyRepository::class)
+ * @UniqueEntity("title")
  */
 /*
  * @ORM\Entity(repositoryClass="App\Repository\PropertyRepository")
  */
-
 /**
  * @ORM\Entity
  * @UniqueEntity("title")
@@ -117,9 +118,15 @@ class Property
      */
     private $proprietaire;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Option::class, inversedBy="properties")
+     */
+    private $options;
+
     public function __construct()
     {
         $this->created_at = new DateTime();
+        $this->options = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -324,6 +331,30 @@ class Property
     public function setProprietaire(?string $proprietaire): self
     {
         $this->proprietaire = $proprietaire;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Option[]
+     */
+    public function getOptions(): Collection
+    {
+        return $this->options;
+    }
+
+    public function addOption(Option $option): self
+    {
+        if (!$this->options->contains($option)) {
+            $this->options[] = $option;
+        }
+
+        return $this;
+    }
+
+    public function removeOption(Option $option): self
+    {
+        $this->options->removeElement($option);
 
         return $this;
     }

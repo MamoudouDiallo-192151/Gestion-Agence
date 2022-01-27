@@ -1,16 +1,11 @@
-<div class="container mt-4">
+<div class="container mt-2">
 	<div class="row  mb-3 text-center ">
-		{% if is_granted('ROLE_ADMIN') %}
-			<h1 class="">Bienvenue
-				{{ app.user.nom }}
-				{{app.user.prenom}}</h1>
-		{% endif %}
 		{%  for property in properties%}
 			<div class="col-md-4">
-				<div class="card mb-4" style=" max-width: 20rem;max-height: 15em">
+				<div class="card border-secondary mb-3 mt-4" style=" max-width: 20rem;max-height: 15em">
 					<div class="card text-white bg-primary mb-3" style="max-width: 23rem;max-height: 10em">
 						<div class="card-header py-2">
-							<a class="link-light my-0 fw-normal" href="{{path('property_show',{id:property.id, slug: property.slug})}}">{{property.title}}</a>
+							<a class="link-light my-0 fw-normal" style="text-decoration:none" href="{{path('property_show',{id:property.id, slug: property.slug})}}">{{property.title}}</a>
 						</div>
 					</div>
 					<div class="card-body">
@@ -19,7 +14,7 @@
 							m2 -{{property.city}}
 							({{property.postalCode}})</div>
 						<p class="card-text">
-							<div class="text-primary" style="font-size: 2rem;font-weigt: bold;">{{property.getFormattedPrice}}
+							<div class="text-dark" style="font-size: 2rem;font-weigt: bold;">{{property.getFormattedPrice}}
 								D</div>
 						</p>
 					</div>

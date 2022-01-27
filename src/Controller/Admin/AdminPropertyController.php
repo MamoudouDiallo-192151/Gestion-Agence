@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Property;
 use App\Form\PropertyType;
@@ -12,18 +12,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-
+#[Route('/admin/property')]
 class AdminPropertyController extends AbstractController
 {
-    #[Route('/admin/properties', name: 'admin_property_index')]
+    #[Route('/', name: 'admin_property_index')]
     public function index(PropertyRepository $rep): Response
     {
         $propertys = $rep->findAll();
-        return $this->render('admin_property/index.html.twig', [
+        return $this->render('admin/admin_property/index.html.twig', [
             'properties' => $propertys, 'current_menu' => 'admin'
         ]);
     }
-    #[Route('/admin/property/create', name: 'admin_property_create')]
+    #[Route('/create', name: 'admin_property_create')]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         $property = new Property();
@@ -35,12 +35,12 @@ class AdminPropertyController extends AbstractController
             $this->addFlash('success', 'Bien créer avec success');
             return $this->redirectToRoute('admin_property_index');
         }
-        return $this->render('admin_property/create.html.twig', [
+        return $this->render('admin/admin_property/create.html.twig', [
             'property' => $property, 'formProperty' => $form->createView()
         ]);
     }
 
-    #[Route('/admin/{id}', name: 'admin_property_edit')]
+    #[Route('/{id<[0-9]+>}/edit', name: 'admin_property_edit')]
     public function edit(Property $property, Request $request, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(PropertyType::class, $property);
@@ -50,7 +50,7 @@ class AdminPropertyController extends AbstractController
             $this->addFlash('success', 'Bien modifier avec success');
             return $this->redirectToRoute('admin_property_index');
         }
-        return $this->render('admin_property/edit.html.twig', [
+        return $this->render('admin/admin_property/edit.html.twig', [
             'property' => $property, 'formProperty' => $form->createView()
         ]);
     }
@@ -58,7 +58,7 @@ class AdminPropertyController extends AbstractController
      * Cette methode permet de verifier si le token est valide et supprimer le bien
      *  *@IsGranted("ROLE_ADMIN")
      * */
-    #[Route('/admin/{id}/delete', name: 'admin_property_delete')]
+    #[Route('/{id}/delete', name: 'admin_property_delete')]
     public function delete(Property $property, Request $request, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete' . $property->getId(), $request->get(('_token')))) {
