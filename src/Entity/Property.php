@@ -10,6 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 
 /**
@@ -23,8 +27,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity
  * @UniqueEntity("title")
+ * @Vich\Uploadable
  * @ORM\Table(name="bdagence.property")
  */
+
+
 
 class Property
 {
@@ -39,6 +46,25 @@ class Property
      * @ORM\Column(type="integer")
      */
     private $id;
+    /**
+     * Undocumented variable
+     *
+     * @var string|null
+     * @ORM\Column(type="string", length=255)
+     */
+    private  $filename;
+
+    /**
+     * @var File|null
+     *@Assert\Image( 
+     *     maxSize="400k",
+     *     mimeTypes={"image/png", "image/jpeg", "image/jpg"},
+     *     mimeTypesMessage="Formats autorisés : .png, .jpeg, .jpg - Poids autorisé : < 400Ko."
+     * )
+     * @Vich\UploadableField(mapping="property_image",fileNameProperty="filename")
+     */
+
+    private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -109,19 +135,14 @@ class Property
     private $created_at;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $slug;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $proprietaire;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Option::class, inversedBy="properties")
      */
     private $options;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
 
     public function __construct()
     {
@@ -355,6 +376,69 @@ class Property
     public function removeOption(Option $option): self
     {
         $this->options->removeElement($option);
+
+        return $this;
+    }
+
+    /**
+     * Get undocumented variable
+     *
+     * @return  string?null
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * Set undocumented variable
+     *
+     * @param  string?null  $filename  Undocumented variable
+     *
+     * @return  self
+     */
+    public function setFilename(?string $filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of imageFile
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * Set the value of imageFile
+     *
+     * @return  self
+     */
+    public function setImageFile($imageFile)
+    {
+        $this->imageFile = $imageFile;
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($this->imageFile instanceof UploadedFile) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updated_at = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }

@@ -8,7 +8,18 @@
 	<div class="jumbotron">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8"></div>
+				<div class="col-md-8 mt-2">
+					{% if property.filename %}
+						<div class="row">
+							<img src="{{ vich_uploader_asset(property,'imageFile')| imagine_filter('medium')}}" alt=" card-img-top" style=" width: 90%; height: 200px;">
+						</div>
+						<!--  |imagine_filter('medium')-->
+					{% else %}
+						<div class="row">
+							<img src="{{'/images/properties/kfc_home.jpg' }}" alt=" card-img-top" style=" width: 90%; height: 200px;">
+						</div>
+					{% endif %}
+				</div>
 				<div class="col-md-4">
 					<div class="card" style="max-width: 18rem;max-height: 15em">
 						<div class="card text-white bg-primary mb-3" style="max-width: 18rem;max-height: 10em">
@@ -59,8 +70,13 @@
 						</tr>
 					</table>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4 mt-2">
 					<h2>Spécificités</h2>
+					<ul class="list-group">
+						{% for option in property.options %}
+							<li class="list-group-item">{{option.name}}</li>
+						{% endfor %}
+					</ul>
 				</div>
 
 			</div>

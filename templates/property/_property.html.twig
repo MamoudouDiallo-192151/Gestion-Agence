@@ -2,6 +2,16 @@
 	<div class="row  mb-3 text-center ">
 		{%  for property in properties%}
 			<div class="col-md-4">
+				{% if property.filename %}
+					<div class="row">
+						<img src="{{ vich_uploader_asset(property, 'imageFile')}}" alt=" card-img-top" style=" width: 90%; height: 200px;">
+					</div>
+					<!--  |imagine_filter('my_thumb')-->
+				{% else %}
+					<div class="row">
+						<img src="{{'/images/properties/kfc_home.jpg' }}" alt=" card-img-top" style=" width: 90%; height: 200px;">
+					</div>
+				{% endif %}
 				<div class="card border-secondary mb-3 mt-4" style=" max-width: 20rem;max-height: 15em">
 					<div class="card text-white bg-primary mb-3" style="max-width: 23rem;max-height: 10em">
 						<div class="card-header py-2">
