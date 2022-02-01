@@ -33,7 +33,8 @@ class PropertyType extends AbstractType
                     'class' => Option::class,
                     'choice_label' => 'name',
                     'multiple' => true,
-                    'required' => false
+                    'required' => false,
+                    //'expanded' => true
                 ]
             )
             ->add('imageFile', FileType::class, [

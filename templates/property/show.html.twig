@@ -47,10 +47,10 @@
 							<p class="card-text">
 								<div class="text-dark" style="font-size: 2rem;font-weigt: bold;">{{property.formattedPrice}}D</div>
 							</p>
-							<a href="a" class=" btn btn-primary">Contacter l'agence</a>
+							<a href="#" id="contactButton" class=" btn btn-primary" {% if form.vars.submitted %} style="display: none" {% endif %}>Contacter l'agence</a>
 						</div>
 					</div>
-					<div class="mt-4" id="contactForm">
+					<div class="mt-4" id="contactForm" {% if not form.vars.submitted %} style="display: none" {% endif %}>
 						{{form_start(form)}}
 						<div class="row">
 							<div class="col">{{form_row(form.firstname)}}</div>

@@ -6,7 +6,25 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
 
+
 Encore
+
+.configureBabel(function(babelConfig) {
+    // add additional presets
+    babelConfig.presets.push('@babel/preset-flow');
+
+    // no plugins are added by default, but you can add some
+    babelConfig.plugins.push('styled-jsx/babel');
+}, {
+    // node_modules is not processed through Babel by default
+    // but you can allow some specific modules to be processed
+    includeNodeModules: ['foundation-sites'],
+
+    // or completely control the exclude rule (note that you
+    // can't use both "includeNodeModules" and "exclude" at
+    // the same time)
+   // exclude: /bower_components/
+})
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path
@@ -63,13 +81,13 @@ Encore
 
     // uncomment if you use React
     //.enableReactPreset()
-
     // uncomment to get integrity="..." attributes on your script & link tags
     // requires WebpackEncoreBundle 1.4 or higher
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
 ;
+
 
 module.exports = Encore.getWebpackConfig();
