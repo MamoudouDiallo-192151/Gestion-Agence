@@ -8,30 +8,29 @@
 				{{ app.user.nom }}
 				{{app.user.prenom}}</h1>
 		{% endif %}
-	</div>
-
-	<div class="container mt-1">
-		<div class="row  mb-3 text-center ">
-			{%  for property in properties%}
-				<div class="col-md-3">
-					<div class="card border-secondary mb-3" style=" max-width: 18rem;max-height: 15em">
-						<div class="card text-white bg-primary mb-3" style="max-width: 23rem;max-height: 10em">
-							<div class="card-header py-2">
-								<a class="link-light my-0 fw-normal" style="text-decoration:none" href="{{path('property_show',{id:property.id, slug: property.slug})}}">{{property.title}}</a>
+		<div class="container mt-1">
+			<div class="row  mb-3 text-center ">
+				{%  for property in properties%}
+					<div class="col-md-3">
+						<div class="card border-secondary mb-3" style=" max-width: 18rem;max-height: 15em">
+							<div class="card text-white bg-primary mb-3" style="max-width: 23rem;max-height: 10em">
+								<div class="card-header py-2">
+									<a class="link-light my-0 fw-normal" style="text-decoration:none" href="{{path('property_show',{id:property.id, slug: property.slug})}}">{{property.title}}</a>
+								</div>
+							</div>
+							<div class="card-body ">
+								<div class="card-text ">
+									{{property.city}}
+									({{property.postalCode}})</div>
+								<p class="card-text">
+									<div class="text-dark" style="font-size: 2rem;font-weigt: bold;">{{property.getFormattedPrice}}
+										D</div>
+								</p>
 							</div>
 						</div>
-						<div class="card-body ">
-							<div class="card-text ">
-								{{property.city}}
-								({{property.postalCode}})</div>
-							<p class="card-text">
-								<div class="text-dark" style="font-size: 2rem;font-weigt: bold;">{{property.getFormattedPrice}}
-									D</div>
-							</p>
-						</div>
 					</div>
-				</div>
-			{% endfor %}
+				{% endfor %}
+			</div>
 		</div>
 	</div>
 {% endblock %}

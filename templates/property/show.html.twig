@@ -1,17 +1,28 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block title %}
 	{{property.title}}
 {% endblock %}
 
 {% block body %}
-	<div class="jumbotron">
+
+	<div class="container-fluid bg-light p-5">
 		<div class="container">
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success">
+					{{message}}
+				</div>
+			{% endfor %}
+			{% if not form.vars.valid %}
+				<div class="alert alert-danger">
+					Erreur au niveau du formulaire
+				</div>
+			{% endif %}
 			<div class="row">
 				<div class="col-md-8 mt-2">
 					{% if property.filename %}
 						<div class="row">
-							<img src="{{ vich_uploader_asset(property,'imageFile')| imagine_filter('medium')}}" alt=" card-img-top" style=" width: 90%; height: 200px;">
+							<img src="{{ vich_uploader_asset(property,'imageFile')}}" alt=" card-img-top" style=" width: 100%; height: 450px;">
 						</div>
 						<!--  |imagine_filter('medium')-->
 					{% else %}
@@ -21,27 +32,42 @@
 					{% endif %}
 				</div>
 				<div class="col-md-4">
-					<div class="card" style="max-width: 18rem;max-height: 15em">
-						<div class="card text-white bg-primary mb-3" style="max-width: 18rem;max-height: 10em">
+					<div class="card text-center" style="max-width: 18rem;max-height: 15em">
+						<div class="card mb-3" style="max-width: 18rem;max-height: 10em">
 							<div class="card-header">
-								<h3>{{property.title}}</h3>
+								<h5>{{property.title}}</h5>
 							</div>
 						</div>
 						<div class="card-body">
 							<h5 class="card-title">{{property.rooms}}
 								picèces -
 								{{property.surface}}
-								m2</h5>
+								m2
+							</h5>
 							<p class="card-text">
-								<div class="text-primary" style="font-size: 2rem;font-weigt: bold;">{{property.formattedPrice}}D</div>
+								<div class="text-dark" style="font-size: 2rem;font-weigt: bold;">{{property.formattedPrice}}D</div>
 							</p>
 							<a href="a" class=" btn btn-primary">Contacter l'agence</a>
 						</div>
 					</div>
+					<div class="mt-4" id="contactForm">
+						{{form_start(form)}}
+						<div class="row">
+							<div class="col">{{form_row(form.firstname)}}</div>
+							<div class="col">{{form_row(form.lastname)}}</div>
+						</div>
+						<div class="row">
+							<div class="col">{{form_row(form.phone)}}</div>
+							<div class="col">{{form_row(form.email)}}</div>
+						</div>
+						{{form_rest(form)}}
+						<input type="submit" class="btn btn-primary" value="{{valeurBtnSubmit|default("Enrégistrer")}}" formnovalidate>
+						{{form_end(form)}}
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="container mt-4">
+		<div class="container mt-1">
 			<p>{{property.description | nl2br}}</p>
 			<div class="row">
 				<div class="col-md-8">
@@ -78,8 +104,7 @@
 						{% endfor %}
 					</ul>
 				</div>
-
 			</div>
 		</div>
-	</td>
-</tr></td></tr></td></tr>{% endblock %}
+	</div>
+{% endblock %}

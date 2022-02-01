@@ -1,0 +1,41 @@
+{# templates/emails/signup.html.twig #}
+<div class="container-fluid mt-4 bg-light p-2">
+	<h1>Welcome
+		{{contact.firstname }}!</h1>
+	<h1>Demande de contact
+		{{ contact.property.title}}</h1>
+	<p>Une nouvelle personne souhaiterais avoir plus d'informations sur le bien
+		<a href="{{url('property_show',{id:contact.property.id,slug:contact.property.id})}}">{{ contact.property.title}}</a>
+	</p>
+	<p>
+		You signed up as
+		{{ contact.firstname }}
+		{{ contact.lastname}}
+		the following email:
+		{{ contact.email }}
+	</p>
+</div>
+<table class="table">
+	<thead class="table-light">
+		<th>FirstName</th>
+		<th>LastName</th>
+		<th>Telephone</th>
+		<th>Message</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				{{ contact.firstname }}
+			</td>
+			<td>
+				{{ contact.lastname }}
+			</td>
+			<td>
+				{{ contact.phone }}
+			</td>
+			<td>
+				{{ contact.message | nl2br }}
+			</td>
+		</tr>
+	</tbody>
+</table>
