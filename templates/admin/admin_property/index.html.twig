@@ -24,11 +24,15 @@
 					<tr>
 						<td>{{property.title}}</td>
 						<td>
-							<a href="{{path('admin_property_edit',{id:property.id})}}" class="btn btn-secondary">Editer</a>
+							<a href="{{path('admin_property_edit',{id:property.id})}}" class="btn btn-sm btn-blue ">
+								<span class="text-white">Editer</span>
+							</a>
 							<form method="POST" action="{{path('admin_property_delete',{id:property.id})}}" style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr de supprimer ?')">
 								<input type="hidden" name="method" value="DELETE">
 								<input type="hidden" name="_token" value="{{csrf_token('delete' ~ property.id)}}">
-								<button class="btn btn-danger">Supprimer</button>
+								<button class="btn btn-sm btn-danger">
+									<span class="text-white">Supprimer</span>
+								</button>
 							</form>
 						</td>
 					</tr>

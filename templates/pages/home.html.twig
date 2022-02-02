@@ -11,8 +11,8 @@
 		<div class="container mt-1">
 			<div class="row  mb-3 text-center ">
 				{%  for property in properties%}
-					<div class="col-md-3">
-						<div class="card border-secondary mb-3" style=" max-width: 18rem;max-height: 15em">
+					<div class="col-12 col-md-6 col-lg-3 mb-4">
+						<div class="card border shadow lift">
 							<div class="card text-white bg-primary mb-3" style="max-width: 23rem;max-height: 10em">
 								<div class="card-header py-2">
 									<a class="link-light my-0 fw-normal" style="text-decoration:none" href="{{path('property_show',{id:property.id, slug: property.slug})}}">{{property.title}}</a>

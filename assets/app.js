@@ -7,6 +7,8 @@
 var $ = require('jquery');
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
+import './styles/app.scss';
+import bsCustomFileInput from 'bs-custom-file-input';
 
 // start the Stimulus application
 import './bootstrap'
@@ -21,3 +23,4 @@ $contactButton.click(e=>{
     $contactButton.slideUp();
 })
 console.log('hello');
+bsCustomFileInput.init();
