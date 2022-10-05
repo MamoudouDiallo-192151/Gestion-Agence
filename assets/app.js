@@ -23,4 +23,4 @@ $contactButton.click(e=>{
     $contactButton.slideUp();
 })
 console.log('hello');
-bsCustomFileInput.init();
+bsCustomFileInput.init();  

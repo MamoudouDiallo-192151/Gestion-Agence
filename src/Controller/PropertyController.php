@@ -31,18 +31,14 @@ class  PropertyController extends AbstractController
      *@Route("/biens", name="property_index")
      * @return Response
      */
-    public function index(PropertyRepository $rep, PaginatorInterface $paginator, Request $request): Response
+    public function index(PropertyRepository $rep, Request $request): Response
     {
         $search = new PropertySearch();
         $form = $this->createForm(PropertySearchType::class, $search);
         $form->handleRequest($request);
-        $properties = $paginator->paginate(
-            $rep->findAllVisibleQuery($search), //// Requête contenant les données à paginer (ici nos properties)
-            $request->query->getInt('page', 1), //// Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            12
-        );
+
         return $this->render('property/index.html.twig', [
-            'properties' => $properties,
+            'properties' => $rep->paginateAllVisibleQuery($search, $request->query->getInt('page', 1)),
             'formSearch' => $form->createView(),
             'current_menu' => 'properties'
         ]);

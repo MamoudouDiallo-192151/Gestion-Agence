@@ -32,7 +32,7 @@
 					{% endif %}
 				</div>
 				<div class="col-md-4">
-					<div class="card text-center" style="max-width: 18rem;max-height: 15em">
+					<div class="card border shadow lift text-center" style="max-width: 18rem;max-height: 15em">
 						<div class="card mb-3" style="max-width: 18rem;max-height: 10em">
 							<div class="card-header">
 								<h5>{{property.title}}</h5>
@@ -47,7 +47,11 @@
 							<p class="card-text">
 								<div class="text-dark" style="font-size: 2rem;font-weigt: bold;">{{property.formattedPrice}}D</div>
 							</p>
-							<a href="#" id="contactButton" class=" btn btn-primary" {% if form.vars.submitted %} style="display: none" {% endif %}>Contacter l'agence</a>
+							<a href="#" id="contactButton" class="btn btn-lg btn-blue" {% if form.vars.submitted %} style="display: none" {% endif %}>
+								<span class="text-white">
+									Contacter l'agence
+								</span>
+							</a>
 						</div>
 					</div>
 					<div class="mt-4" id="contactForm" {% if not form.vars.submitted %} style="display: none" {% endif %}>
@@ -61,7 +65,7 @@
 							<div class="col">{{form_row(form.email)}}</div>
 						</div>
 						{{form_rest(form)}}
-						<input type="submit" class="btn btn-primary" value="{{valeurBtnSubmit|default("Enrégistrer")}}" formnovalidate>
+						<input type="submit" class="btn btn-lg btn-blue text-white" value="{{valeurBtnSubmit|default("Envoyer")}}" formnovalidate>
 						{{form_end(form)}}
 					</div>
 				</div>

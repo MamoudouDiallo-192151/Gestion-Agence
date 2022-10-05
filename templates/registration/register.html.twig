@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block body %}
-	<h3>Bienvenue sur la Page d'inscription</h3>
-	<div class="container mt-4">
-		<div class="card-body">
-			<div class="d-flex flex-row">
-				<div style="margin: auto;">
+	<div style="margin: auto;">
+		<div class="col-12 col-lg-15">
+			<div class="bg-light shadow border rounded-lg p-4">
+				<h3 class="font-weight-light">Bienvenue sur la Page d'inscription</h3>
+				<div class="d-flex flex-row">
 					{{ form_start(registrationForm) }}
-					{{ form_row(registrationForm.email) }}
+					{{ form_row(registrationForm.email,{'row_attr':{'class':"w-100"}}) }}
 					{{ form_row(registrationForm.nom, {
             label: 'Nom'
         }) }}

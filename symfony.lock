@@ -666,6 +666,9 @@
     "twbs/bootstrap": {
         "version": "v5.0.2"
     },
+    "twig/cache-extra": {
+        "version": "v3.3.4"
+    },
     "twig/cssinliner-extra": {
         "version": "v3.3.5"
     },
